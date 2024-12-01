@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Prediction</h1>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="glucose">Glucose Level (mg/dL):</label>
+                <input type="number" class="form-control" id="glucose" name="glucose" required>
+            </div>
+            <div class="form-group">
+                <label for="bloodPressure">Blood Pressure (mmHg):</label>
+                <input type="number" class="form-control" id="bloodPressure" name="bloodPressure" required>
+            </div>
+            <div class="form-group">
+                <label for="skinThickness">Skin Thickness (mm):</label>
+                <input type="number" class="form-control" id="skinThickness" name="skinThickness" required>
+            </div>
+            <div class="form-group">
+                <label for="insulin">Insulin Level (μU/mL):</label>
+                <input type="number" class="form-control" id="insulin" name="insulin" required>
+            </div>
+            <div class="form-group">
+                <label for="bmi">BMI (kg/m²):</label>
+                <input type="number" class="form-control" id="bmi" name="bmi" required>
+            </div>
+            <div class="form-group">
+                <label for="diabetesPedigreeFunction">Diabetes Pedigree Function:</label>
+                <input type="number" class="form-control" id="diabetesPedigreeFunction" name="diabetesPedigreeFunction" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age (years):</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+        <div id="prediction"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();
+
+                const glucose = $('#glucose').val();
+                const bloodPressure = $('#bloodPressure').val();
+                const skinThickness = $('#skinThickness').val();
+                const insulin = $('#insulin').val();
+                const bmi = $('#bmi').val();
+                const diabetesPedigreeFunction = $('#diabetesPedigreeFunction').val();
+                const age = $('#age').val();
+
+                $.ajax({
+                    url: '/',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        glucose: glucose,
+                        bloodPressure: bloodPressure,
+                        skinThickness: skinThickness,
+                        insulin: insulin,
+                        bmi: bmi,
+                        diabetesPedigreeFunction: diabetesPedigreeFunction,
+                        age: age
+                    }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        $('#prediction').html(`<p>Prediction: ${response}</p>`);
+                    },
+                    error: function(error) {
+                        console.error
