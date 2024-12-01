@@ -63,18 +63,18 @@
           // Add other fields as needed
         };
 
-        // Send AJAX request to predict
+        // Send AJAX request for prediction
         $.ajax({
           url: '/',
           type: 'POST',
           data: JSON.stringify(data),
           contentType: 'application/json',
           success: function(response) {
-            $('#prediction').html(`<p>${response}</p>`);
+            $('#prediction').html(`<p>${response.prediction}</p>`);
           },
           error: function(error) {
             console.error('Error:', error);
-            $('#prediction').html('<p>Error en la predicción. Por favor, intenta de nuevo.</p>');
+            $('#prediction').html('<p>Ocurrió un error. Intente nuevamente.</p>');
           }
         });
       });
