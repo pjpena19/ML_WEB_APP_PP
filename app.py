@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 import joblib
 import pandas as pd
-import numpy as np
 
 app = Flask(__name__)
 
@@ -13,7 +12,7 @@ features = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html') 1 
 
 @app.route('/', methods=['POST'])
 def predict():
@@ -27,17 +26,18 @@ def predict():
         # Realiza la predicción
         prediction = model.predict(input_data)[0]
 
-        # Devuelve la predicción como un string
+        # Prepara el mensaje de resultado
         if prediction == 1:
-            result = "La persona tiene un alto riesgo de desarrollar diabetes."
+            result = "¡Alto riesgo de diabetes! Recomendamos consultar a un médico."
         else:
-            result = "La persona tiene un bajo riesgo de desarrollar diabetes."
+            result = "Bajo riesgo de diabetes. Sin embargo, es importante mantener un estilo de vida saludable."
 
+        # Devuelve la predicción como un diccionario con un formato más claro
         return jsonify({'prediction': result})
 
     except Exception as e:
         # Maneja errores de manera más robusta
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': 'Ocurrió un error al realizar la predicción. Por favor, verifica los datos ingresados.'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
