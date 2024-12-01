@@ -1,14 +1,13 @@
 from flask import Flask, request, render_template, jsonify
 import joblib
 import pandas as pd
-import numpy as np
 
 app = Flask(__name__)
 
-# Carga el modelo entrenado (reemplaza "mymodel.joblib" con el nombre de tu archivo)
-model = joblib.load("mymodel.joblib")
+# Carga el modelo entrenado
+Elmodelo = joblib.load("mymodel.joblib")
 
-# Define las características esperadas por el modelo (ajusta según tus datos)
+# Define las características esperadas por el modelo
 features = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 
 @app.route('/')
@@ -25,7 +24,7 @@ def predict():
         input_data = pd.DataFrame([data], columns=features)
 
         # Realiza la predicción
-        prediction = model.predict(input_data)[0]
+        prediction = Elmodelo.predict(input_data)[0]
 
         # Prepara el mensaje de resultado
         if prediction == 1:
