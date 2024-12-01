@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <title>Predicción de Diabetes</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Estilos CSS para personalizar la apariencia de la página */
-    /* ... */
-  </style>
 </head>
 <body>
   <div class="container">
@@ -18,8 +14,8 @@
         <input type="number" class="form-control" id="pregnancies" name="pregnancies" required>
       </div>
       <div class="form-group">
-        <label for="glucose">Nivel de Glucosa (mg/dL):</label>
-        <input type="number" class="form-control" id="glucose" name="glucose" required>
+        <label for="age">Edad:</label>
+        <input type="number" class="form-control" id="age" name="age" required>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Predecir</button>
     </form>
@@ -38,8 +34,12 @@
         const data = {
           Pregnancies: $('#pregnancies').val(),
           Glucose: $('#glucose').val(),
-          // Agrega aquí los demás campos con sus respectivos IDs
-          // ...
+          BloodPressure: $('#bloodPressure').val(),
+          SkinThickness: $('#skinThickness').val(),
+          Insulin: $('#insulin').val(),
+          BMI: $('#bmi').val(),
+          DiabetesPedigreeFunction: $('#diabetesPedigreeFunction').val(),
+          Age: $('#age').val(),
         };
 
         // Envía una solicitud AJAX para realizar la predicción

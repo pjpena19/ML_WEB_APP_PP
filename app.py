@@ -4,7 +4,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# Carga el modelo entrenado (reemplaza "mymodel.joblib" con el nombre de tu archivo)
+# Carga el modelo entrenado
 model = joblib.load("mymodel.joblib")
 
 # Define las características esperadas por el modelo
