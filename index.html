@@ -2,54 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Diabetes Prediction</title>
+    <title>Predicción de Diabetes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-        }
-        .form-group {
-            margin-bottom: 15px;
+            background-color: #f2f2f2;
         }
         .container {
             max-width: 500px;
-            margin-top: 50px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        #prediction {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Diabetes Prediction</h1>
+        <h1>Predicción de Diabetes</h1>
         <form method="POST" action="/">
             <div class="form-group">
-                <label for="glucose">Glucose Level (mg/dL):</label>
+                <label for="glucose">Nivel de Glucosa (mg/dL):</label>
                 <input type="number" class="form-control" id="glucose" name="glucose" required>
             </div>
             <div class="form-group">
-                <label for="bloodPressure">Blood Pressure (mmHg):</label>
-                <input type="number" class="form-control" id="bloodPressure" name="bloodPressure" required>
-            </div>
-            <div class="form-group">
-                <label for="skinThickness">Skin Thickness (mm):</label>
-                <input type="number" class="form-control" id="skinThickness" name="skinThickness" required>
-            </div>
-            <div class="form-group">
-                <label for="insulin">Insulin Level (μU/mL):</label>
-                <input type="number" class="form-control" id="insulin" name="insulin" required>
-            </div>
-            <div class="form-group">
-                <label for="bmi">BMI (kg/m²):</label>
-                <input type="number" class="form-control" id="bmi" name="bmi" required>
-            </div>
-            <div class="form-group">
-                <label for="diabetesPedigreeFunction">Diabetes Pedigree Function:</label>
-                <input type="number" class="form-control" id="diabetesPedigreeFunction" name="diabetesPedigreeFunction" required>
-            </div>
-            <div class="form-group">
-                <label for="age">Age (years):</label>
+                <label for="age">Edad (años):</label>
                 <input type="number" class="form-control" id="age" name="age" required>
             </div>
-            <button type="submit" class="btn btn-primary">Predict</button>
+            <button type="submit" class="btn btn-primary btn-block">Predecir</button>
         </form>
         <div id="prediction"></div>
     </div>
@@ -62,29 +55,28 @@
             $('form').submit(function(event) {
                 event.preventDefault();
 
-                const glucose = $('#glucose').val();
-                const bloodPressure = $('#bloodPressure').val();
-                const skinThickness = $('#skinThickness').val();
-                const insulin = $('#insulin').val();
-                const bmi = $('#bmi').val();
-                const diabetesPedigreeFunction = $('#diabetesPedigreeFunction').val();
-                const age = $('#age').val();
+                // Obtén los valores de los campos del formulario
+                const data = {
+                    glucose: $('#glucose').val(),
+                    // Agrega aquí los demás datos
+                    age: $('#age').val()
+                };
 
                 $.ajax({
                     url: '/',
                     type: 'POST',
-                    data: JSON.stringify({
-                        glucose: glucose,
-                        bloodPressure: bloodPressure,
-                        skinThickness: skinThickness,
-                        insulin: insulin,
-                        bmi: bmi,
-                        diabetesPedigreeFunction: diabetesPedigreeFunction,
-                        age: age
-                    }),
+                    data: JSON.stringify(data),
                     contentType: 'application/json',
                     success: function(response) {
-                        $('#prediction').html(`<p>Prediction: ${response}</p>`);
+                        $('#prediction').html(`<p>${response}</p>`);
                     },
                     error: function(error) {
-                        console.error
+                        console.error('Error:', error);
+                        $('#prediction').html('<p>Error en la predicción. Por favor, intenta de nuevo.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
