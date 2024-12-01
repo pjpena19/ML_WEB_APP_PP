@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <title>Predicción de Diabetes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Estilos CSS para personalizar la apariencia de la página */
+    /* ... */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Predicción de Diabetes</h1>
+    <form method="POST" action="/">
+      <div class="form-group">
+        <label for="pregnancies">Embarazos:</label>
+        <input type="number" class="form-control" id="pregnancies" name="pregnancies" required>
+      </div>
+      <div class="form-group">
+        <label for="glucose">Nivel de Glucosa (mg/dL):</label>
+        <input type="number" class="form-control" id="glucose" name="glucose" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Predecir</button>
+    </form>
+    <div id="prediction"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function() {
       $('form').submit(function(event) {
@@ -10,12 +38,8 @@
         const data = {
           Pregnancies: $('#pregnancies').val(),
           Glucose: $('#glucose').val(),
-          BloodPressure: $('#bloodPressure').val(),
-          SkinThickness: $('#skinThickness').val(),
-          Insulin: $('#insulin').val(),
-          BMI: $('#bmi').val(),
-          DiabetesPedigreeFunction: $('#diabetesPedigreeFunction').val(),
-          Age: $('#age').val(),
+          // Agrega aquí los demás campos con sus respectivos IDs
+          // ...
         };
 
         // Envía una solicitud AJAX para realizar la predicción
