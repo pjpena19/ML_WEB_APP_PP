@@ -10,33 +10,36 @@ model = joblib.load("mymodel.joblib")
 # Define las características esperadas por el modelo
 features = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+app = Flask(__name__) # __name__ = app
+model_class = {
+    "0":"Bajo riesgo de diabetes. Continúe manteniendo un estilo de vida saludable.",
+    "1":"Alto riesgo de diabetes. Se recomienda consultar con un médico de inmediato." 
+}
 
-@app.route('/', methods=['POST'])
+@app.route("/", methods = ["GET", "POST"])
 def predict():
-    try:
+
+    if request.method == "POST":
         # Obtén los datos del formulario
-        data = request.get_json()
+
+        val1 = float(request.form["val1"])
+        val2 = float(request.form["val2"])
+        val3 = float(request.form["val3"])
+        val4 = float(request.form["val4"])
+        val5 = float(request.form["val8"])
+        val6 = float(request.form["val6"])
+        val7 = float(request.form["val7"])
+        val8 = float(request.form["val8"])
 
         # Crea un DataFrame con las características en el orden correcto
-        input_data = pd.DataFrame([data], columns=features)
+        my_df = pd.DataFrame([[val1, val2, val3, val4,val5,val6,val6,val7,val8]],columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
 
         # Realiza la predicción
-        prediction = model.predict(input_data)[0]
+        prediction = str(model.predict(my_df)[0])
+        pred_class = model_class[prediction]
 
-        # Prepara el mensaje de resultado
-        if prediction == 1:
-            result = "Alto riesgo de diabetes. Se recomienda consultar con un médico de inmediato."
-        else:
-            result = "Bajo riesgo de diabetes. Continúe manteniendo un estilo de vida saludable."
+    else:
 
-        return jsonify({'prediction': result})
+        pred_class = None
 
-    except Exception as e:
-        print(f"Error durante la predicción: {e}")  # Registra el error para depuración
-        return jsonify({'error': 'Ocurrió un error. Por favor, verifica los datos ingresados.'}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return render_template("index.html", prediction = pred_class)
