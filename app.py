@@ -32,7 +32,7 @@ def predict():
         val8 = float(request.form["val8"])
 
         # Crea un DataFrame con las características en el orden correcto
-        my_df = pd.DataFrame([[val1, val2, val3, val4,val5,val6,val6,val7,val8]],columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
+        my_df = pd.DataFrame([[val1, val2, val3,val5,val6,val6,val7,val8]],columns=['Pregnancies', 'Glucose', 'BloodPressure', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
 
         # Realiza la predicción
         prediction = str(model.predict(my_df)[0])
