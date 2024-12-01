@@ -1,13 +1,14 @@
 from flask import Flask, request, render_template, jsonify
 import joblib
 import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained model (replace "mymodel.joblib" with your actual filename)
+# Carga el modelo entrenado (reemplaza "mymodel.joblib" con el nombre de tu archivo)
 model = joblib.load("mymodel.joblib")
 
-# Define expected model features (adjust as needed)
+# Define las características esperadas por el modelo (ajusta según tus datos)
 features = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 
 @app.route('/')
@@ -17,16 +18,16 @@ def home():
 @app.route('/', methods=['POST'])
 def predict():
     try:
-        # Get data from JSON request
+        # Obtén los datos del formulario
         data = request.get_json()
 
-        # Create a DataFrame
+        # Crea un DataFrame con las características en el orden correcto
         input_data = pd.DataFrame([data], columns=features)
 
-        # Perform prediction
+        # Realiza la predicción
         prediction = model.predict(input_data)[0]
 
-        # Prepare informative prediction messages (adjust threshold as needed)
+        # Prepara el mensaje de resultado
         if prediction == 1:
             result = "Alto riesgo de diabetes. Se recomienda consultar con un médico de inmediato."
         else:
@@ -35,9 +36,8 @@ def predict():
         return jsonify({'prediction': result})
 
     except Exception as e:
-        # Handle errors gracefully (log or display a generic message)
-        print(f"Error during prediction: {e}")
-        return jsonify({'error': 'Ocurrió un error. Intente nuevamente.'}), 500
+        print(f"Error durante la predicción: {e}")  # Registra el error para depuración
+        return jsonify({'error': 'Ocurrió un error. Por favor, verifica los datos ingresados.'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)  # Set debug=False for production
+    app.run(debug=True)

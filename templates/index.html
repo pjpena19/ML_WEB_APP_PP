@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Predicción de Diabetes</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    /* Customize page appearance */
+    /* Estilos CSS para personalizar la apariencia de la página */
     body {
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
@@ -39,7 +39,7 @@
         <label for="glucose">Nivel de Glucosa (mg/dL):</label>
         <input type="number" class="form-control" id="glucose" name="glucose" required>
       </div>
-      <div class="form-group">
+      <div class="form="group">
         <label for="age">Edad (años):</label>
         <input type="number" class="form-control" id="age" name="age" required>
       </div>
@@ -56,25 +56,26 @@
       $('form').submit(function(event) {
         event.preventDefault();
 
-        // Get form data
+        // Obtén los datos del formulario
         const data = {
           glucose: $('#glucose').val(),
           age: $('#age').val(),
-          // Add other fields as needed
+          // Agrega aquí más datos según las características de tu modelo
         };
 
-        // Send AJAX request for prediction
+        // Envía una solicitud AJAX para realizar la predicción
         $.ajax({
           url: '/',
           type: 'POST',
           data: JSON.stringify(data),
           contentType: 'application/json',
           success: function(response) {
+            console.log(response); // Para depurar, puedes ver la respuesta completa en la consola
             $('#prediction').html(`<p>${response.prediction}</p>`);
           },
           error: function(error) {
             console.error('Error:', error);
-            $('#prediction').html('<p>Ocurrió un error. Intente nuevamente.</p>');
+            $('#prediction').html('<p>Ocurrió un error. Por favor, verifica los datos ingresados.</p>');
           }
         });
       });
